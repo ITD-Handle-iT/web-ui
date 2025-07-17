@@ -9,6 +9,7 @@ PROVIDER_DISPLAY_NAMES = {
     "unbound": "Unbound AI",
     "ibm": "IBM",
     "grok": "Grok",
+    "openrouter": "OpenRouter",
 }
 
 # Predefined model names for common providers
@@ -96,5 +97,8 @@ model_names = {
         "Qwen/Qwen3-30B-A3B",
         "Qwen/Qwen3-32B",
         "Qwen/Qwen3-235B-A22B",
+    ],
+    "openrouter":[
+        "google/gemma-2-9b-it:free",
     ],
 }
