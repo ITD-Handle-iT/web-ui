@@ -335,21 +335,6 @@ def get_llm_model(provider: str, **kwargs):
             model_name=kwargs.get("model_name", "Qwen/QwQ-32B"),
             temperature=kwargs.get("temperature", 0.0),
         )
-    elif provider == "modelscope":
-        if not kwargs.get("api_key", ""):
-            api_key = os.getenv("MODELSCOPE_API_KEY", "")
-        else:
-            api_key = kwargs.get("api_key")
-        if not kwargs.get("base_url", ""):
-            base_url = os.getenv("MODELSCOPE_ENDPOINT", "")
-        else:
-            base_url = kwargs.get("base_url")
-        return ChatOpenAI(
-            api_key=api_key,
-            base_url=base_url,
-            model_name=kwargs.get("model_name", "deepseek/deepseek-r1-0528-qwen3-8b:free"),
-            temperature=kwargs.get("temperature", 0.0),
-        )
     elif provider == "openrouter":
         if not kwargs.get("api_key", ""):
             api_key = os.getenv("OPENROUTER_API_KEY", "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")
