@@ -1,5 +1,7 @@
 from openai import OpenAI
 import pdb
+import json
+import random
 from langchain_openai import ChatOpenAI
 from langchain_core.globals import get_llm_cache
 from langchain_core.language_models.base import (
@@ -238,10 +240,22 @@ def get_llm_model(provider: str, **kwargs):
                 api_key=api_key,
             )
     elif provider == "google":
+        google_api_key = api_key
+        try:
+            # Assumes api_keys.json is in the root of the web-ui project
+            keys_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'api_keys.json'))
+            if os.path.exists(keys_path):
+                with open(keys_path, 'r') as f:
+                    keys = json.load(f)
+                if keys:
+                    google_api_key = random.choice(keys)
+        except Exception as e:
+            print(f"Could not load Google API keys from api_keys.json, falling back to environment variable. Error: {e}")
+
         return ChatGoogleGenerativeAI(
             model=kwargs.get("model_name", "gemini-2.0-flash-exp"),
             temperature=kwargs.get("temperature", 0.0),
-            api_key=api_key,
+            api_key=google_api_key,
         )
     elif provider == "ollama":
         if not kwargs.get("base_url", ""):
